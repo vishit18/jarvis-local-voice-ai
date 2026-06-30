@@ -23,3 +23,30 @@ Everything runs on your own hardware. The LLM never makes an outbound connection
 ## Setup
 
 1. Clone this repo
+   git clone https://github.com/yourusername/jarvis-local-voice-ai.git
+   cd jarvis-local-voice-ai
+
+2. Create a virtual environment with Python 3.10
+   py -3.10 -m venv venv
+   venv\Scripts\activate
+
+3. Install dependencies
+   pip install -r requirements.txt
+
+4. Download the Kokoro model files
+   python download_kokoro.py
+
+5. Open LM Studio, load a model, and start the local server (default port 1234)
+
+6. Run Jarvis
+   python jarvis.py
+
+## Notes
+
+- Update the `model` field in `jarvis.py` to match whatever model identifier LM Studio shows for your loaded model
+- Default voice is `bm_lewis` — Kokoro has 26+ voices available, see [Kokoro voices list](https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md)
+- This is a learning project built for a YouTube series, not a polished product — expect rough edges
+
+## License
+
+MIT — do whatever you want with this.
