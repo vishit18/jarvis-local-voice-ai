@@ -24,7 +24,7 @@ Everything runs on your own hardware. The LLM never makes an outbound connection
 ## Setup
 
 1. Clone this repo
-   git clone https://github.com/yourusername/jarvis-local-voice-ai.git
+   git clone https://github.com/vishit18/jarvis-local-voice-ai.git
    cd jarvis-local-voice-ai
 
 2. Create a virtual environment with Python 3.10
