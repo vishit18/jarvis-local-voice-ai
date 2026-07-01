@@ -4,7 +4,7 @@ A fully private, local voice assistant that runs entirely on your own machine. N
 
 Episode 2 of my series building a private AI setup from scratch.
 🎥 Watch the full build: [your YouTube link here]
-🎥 Episode 1 (choosing the local LLM): [your YouTube link here]
+🎥 Episode 1 (choosing the local LLM): [https://www.youtube.com/watch?v=in-Y2Sg_ZJ0&t=239s]
 
 ## How it works
 
@@ -44,8 +44,8 @@ Everything runs on your own hardware. The LLM never makes an outbound connection
 ## Notes
 
 - Update the `model` field in `jarvis.py` to match whatever model identifier LM Studio shows for your loaded model
-- Default voice is `bm_lewis` — Kokoro has 26+ voices available, see [Kokoro voices list](https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md)
-- This is a learning project built for a YouTube series, not a polished product — expect rough edges
+- Default voice is `bm_lewis` — Kokoro has 26+ voices available
+- This is a learning project built for a YouTube series, not a polished product.
 
 ## License
 
