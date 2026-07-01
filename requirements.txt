@@ -1,0 +1,7 @@
+faster-whisper
+sounddevice
+numpy
+kokoro-onnx
+onnxruntime
+soundfile
+requests
