@@ -5,3 +5,4 @@ kokoro-onnx
 onnxruntime
 soundfile
 requests
+chromadb
