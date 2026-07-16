@@ -8,7 +8,7 @@ Part of my series building a private AI setup from scratch.
 
 🎥 Episode 2 (giving it a voice): [https://www.youtube.com/watch?v=mn74jKcBPo8]
 
-🎥 Episode 3 (giving it memory): []
+🎥 Episode 3 (giving it memory): [https://www.youtube.com/watch?v=owTBTe4eAVA]
 ## How it works
 
 1. **faster-whisper** listens to your voice and converts it to text
