@@ -7,6 +7,24 @@ import tempfile
 from faster_whisper import WhisperModel
 from kokoro_onnx import Kokoro
 import re
+from chromadb.utils import embedding_functions
+
+
+import chromadb
+
+print("Loading memory...")
+memory_client = chromadb.PersistentClient(path="./jarvis_memory")
+
+embed_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
+    model_name="all-MiniLM-L6-v2",
+    device="cpu"
+)
+
+memory_collection = memory_client.get_or_create_collection(
+    "conversations",
+    embedding_function=embed_fn
+)
+print("Memory ready.")
 
 def clean_text_for_speech(text):
     emoji_pattern = re.compile(
@@ -24,7 +42,7 @@ def clean_text_for_speech(text):
 
 # ── Load models ──────────────────────────────────────────
 print("Loading Whisper...")
-stt = WhisperModel("small", device="cuda", compute_type="float16")
+stt = WhisperModel("small", device="cpu", compute_type="int8")
 print("Whisper ready.")
 
 print("Loading Kokoro...")
@@ -77,30 +95,32 @@ def transcribe(audio):
     return text
 
 def ask_llm(text):
+    memory_context = recall(text)
+    
+    system_prompt = "You are a helpful assistant running locally on the user's own laptop with no internet connection. Keep all responses to two or three sentences maximum. Be conversational and natural. Do not use emojis."
+    
+    if memory_context:
+        system_prompt += f"\n\nRelevant context from past conversations:\n{memory_context}"
+    
     try:
         response = requests.post(
             "http://localhost:1234/v1/chat/completions",
             json={
                 "model": "qwen/qwen3-vl-8b",
                 "messages": [
-                    {
-                        "role": "system",
-                        "content": "You are a helpful assistant running locally on the user's own laptop with no internet connection. Keep all responses to two or three sentences maximum. Be conversational and natural."
-                    },
-                    {
-                        "role": "user",
-                        "content": text
-                    }
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": text}
                 ],
-                "max_tokens": 100
+                "max_tokens": 60
             },
-            timeout=30
+            timeout=180
         )
         reply = response.json()['choices'][0]['message']['content']
-        print(f"🤖 AI: {reply}\n")
+        print(f"\n🤖 AI: {reply}\n")
         return reply
     except Exception as e:
         return f"Error connecting to LM Studio: {str(e)}"
+    
 
 def speak(text):
     text = clean_text_for_speech(text)
@@ -120,13 +140,28 @@ def speak(text):
 
     os.remove(tmp_path)
 
+def remember(text, role):
+    memory_collection.add(
+        documents=[text],
+        ids=[f"{role}_{memory_collection.count()}"],
+        metadatas=[{"role": role}]
+    )
+
+def recall(query, n=3):
+    if memory_collection.count() == 0:
+        return ""
+    results = memory_collection.query(query_texts=[query], n_results=min(n, memory_collection.count()))
+    return "\n".join(results['documents'][0])
+
 # ── Main loop ─────────────────────────────────────────────
 while True:
     input("Press Enter to speak...")
-    audio = listen(max_seconds=15, silence_threshold=0.005, silence_duration=2.0)
+    audio = listen(max_seconds=20, silence_threshold=0.005, silence_duration=2.0)
     text = transcribe(audio)
-    if text:
+    if text and len(text) > 2:
+        remember(text, "user")
         reply = ask_llm(text)
+        remember(reply, "assistant")
         speak(reply)
     else:
-        print("Didn't catch that. Try again.")
+        print("Didn't catch that. Try again.\n")
