@@ -23,7 +23,7 @@ Everything runs on your own hardware. The LLM never makes an outbound connection
 - NVIDIA GPU recommended for faster Whisper transcription
 - [LM Studio](https://lmstudio.ai) installed and running locally with a model loaded
 
-## Setup
+## Setup 
 
 1. Clone this repo
    git clone https://github.com/vishit18/jarvis-local-voice-ai.git
