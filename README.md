@@ -5,7 +5,7 @@ A fully private, local voice assistant that runs entirely on your own machine. N
 Part of my series building a private AI setup from scratch.
 
 🎥 Episode 1 (choosing the local LLM): [https://www.youtube.com/watch?v=in-Y2Sg_ZJ0&t=239s]
-
+ 
 🎥 Episode 2 (giving it a voice): [https://www.youtube.com/watch?v=mn74jKcBPo8]
 
 🎥 Episode 3 (giving it memory): [https://www.youtube.com/watch?v=owTBTe4eAVA]
