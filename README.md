@@ -11,7 +11,7 @@ Part of my series building a private AI setup from scratch.
 🎥 Episode 3 (giving it memory): [https://www.youtube.com/watch?v=owTBTe4eAVA]
 ## How it works
 
-1. **faster-whisper** listens to your voice and converts it to text
+1. **faster-whisper** listens to your voice and converts it to text 
 2. **LM Studio** (running Qwen3 locally) generates a response
 3. **Kokoro ONNX** converts the response back into natural speech
 
