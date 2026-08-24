@@ -1,6 +1,6 @@
 # Jarvis Local Voice AI
 
-A fully private, local voice assistant that runs entirely on your own machine. No cloud APIs, no subscriptions, no data leaving your computer.
+A fully private, local voice assistant that runs entirely on your own machine. No cloud APIs, no subscriptions, no data leaving your computer. 
 
 Part of my series building a private AI setup from scratch.
 
